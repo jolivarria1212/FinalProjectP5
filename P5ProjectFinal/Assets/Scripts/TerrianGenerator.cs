@@ -4,13 +4,21 @@ using UnityEngine;
 
 public class TerrianGenerator : MonoBehaviour
 {
+    [SerializeField] private int maxTerrianCount;
+    [SerializeField] private List<TerrianData> terrianDatas = new List<TerrianData>();
+
+    private List<GameObject> currentTerrians = new List<GameObject>();
     private Vector3 currentPosition = new Vector3(0, 0, 0);
 
-    [SerializeField] private List<GameObject> terrians = new List<GameObject>();
+    
     // Start is called before the first frame update
     void Start()
     {
-        SpawnTerrian();
+        for (int i = 0; i < maxTerrianCount; i++)
+        {
+            SpawnTerrian(true);
+        }
+        maxTerrianCount = currentTerrians.Count;
     }
 
     // Update is called once per frame
@@ -18,13 +26,27 @@ public class TerrianGenerator : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.W))
         {
-            SpawnTerrian();
+            SpawnTerrian(false);
         }
     }
 
-    private void SpawnTerrian()
+    private void SpawnTerrian(bool isStart)
     {
-        Instantiate(terrians[Random.Range(0,terrians.Count)], currentPosition, Quaternion.identity);
-        currentPosition.x++;
+        int whichTerrain = Random.Range(0, terrianDatas.Count);
+        int terrainInSuccession = Random.Range(1, terrianDatas[whichTerrain].maxInSuccession);
+        for (int i = 0; i < terrainInSuccession; i++)
+        {
+            GameObject terrain = Instantiate(terrianDatas[whichTerrain].terrain, currentPosition, Quaternion.identity);
+            currentTerrians.Add(terrain);
+            if (!isStart)
+            {
+                if (currentTerrians.Count > maxTerrianCount)
+                {
+                    Destroy(currentTerrians[0]);
+                    currentTerrians.RemoveAt(0);
+                }
+                currentPosition.x++;
+            }
+        }
     }
 }

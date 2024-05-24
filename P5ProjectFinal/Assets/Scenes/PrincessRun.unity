@@ -152,10 +152,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88b33e936482f554eac4a5e0a7d0f60a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  terrians:
-  - {fileID: 6409818002676541705, guid: 745d78391acbde14ea2f9629687068bd, type: 3}
-  - {fileID: 8819610320490771316, guid: fc5e7041b52120b4e9a8fc81384fb601, type: 3}
-  - {fileID: 3372447115726035714, guid: f5d48c15c78914941afac0d118a33a7d, type: 3}
+  maxTerrianCount: 30
+  terrianDatas:
+  - {fileID: 11400000, guid: 3884093231672bc40a3b44e813adcdd3, type: 2}
+  - {fileID: 11400000, guid: dbf01c7bdecfade4fa3fedecd83f5098, type: 2}
+  - {fileID: 11400000, guid: a890927f7f29e66499fe671fc2f54e27, type: 2}
 --- !u!4 &372325514
 Transform:
   m_ObjectHideFlags: 0
@@ -165,7 +166,7 @@ Transform:
   m_GameObject: {fileID: 372325512}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.4884365, y: -319.1287, z: 162.30452}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -231,7 +232,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
+  orthographic: 1
   orthographic size: 5
   m_Depth: -1
   m_CullingMask:
@@ -256,13 +257,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 660099292}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: 0.18435419, y: 0.4676582, z: -0.10041091, w: 0.8586193}
+  m_LocalPosition: {x: -3.411474, y: 9.061975, z: -5.771369}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 24.236, y: 57.151, z: 0}
 --- !u!1 &1501853739
 GameObject:
   m_ObjectHideFlags: 0
