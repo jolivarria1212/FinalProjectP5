@@ -20,6 +20,12 @@ public class Player : MonoBehaviour
         {
             animator.SetTrigger("Hop");
             isHopping = true;
+            int zDifference = 0;
+            if (transform.position.z % 1 != 0)
+            {
+                zDifference = transform.position.z  Mathf.Round(transform.position.z);
+            }
+            transform.position = (transform.position + new Vector3(1, 0, zDifference));
         }
     }
 
