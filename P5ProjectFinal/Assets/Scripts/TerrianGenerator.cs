@@ -6,6 +6,7 @@ public class TerrianGenerator : MonoBehaviour
 {
     [SerializeField] private int maxTerrianCount;
     [SerializeField] private List<TerrianData> terrianDatas = new List<TerrianData>();
+    [SerializeField] private Transform terrainHolder;
 
     private List<GameObject> currentTerrians = new List<GameObject>();
     private Vector3 currentPosition = new Vector3(0, 0, 0);
@@ -36,7 +37,8 @@ public class TerrianGenerator : MonoBehaviour
         int terrainInSuccession = Random.Range(1, terrianDatas[whichTerrain].maxInSuccession);
         for (int i = 0; i < terrainInSuccession; i++)
         {
-            GameObject terrain = Instantiate(terrianDatas[whichTerrain].terrain, currentPosition, Quaternion.identity);
+            GameObject terrain = Instantiate(terrianDatas[whichTerrain].terrain, currentPosition, Quaternion.identity, terrainHolder);
+            terrain.transform.SetParent(terrainHolder);
             currentTerrians.Add(terrain);
             if (!isStart)
             {
