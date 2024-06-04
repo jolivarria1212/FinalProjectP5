@@ -19,14 +19,10 @@ public class Player : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    private void FixedUpdate()
-    {
-        score++;
-    }
+  
     // Update is called once per frame
     void Update()
     {
-        scoreText.text = "Score: " + score;
         if (Input.GetKeyDown(KeyCode.W) && !isHopping)
         {
             float zDifference = 0;
