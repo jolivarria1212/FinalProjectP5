@@ -1,15 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using UnityEngine;
 
 public class TerrianGenerator : MonoBehaviour
 {
+    [SerializeField] private int minDistanceFromPlayer;
     [SerializeField] private int maxTerrianCount;
     [SerializeField] private List<TerrianData> terrianDatas = new List<TerrianData>();
     [SerializeField] private Transform terrainHolder;
 
     private List<GameObject> currentTerrians = new List<GameObject>();
-    private Vector3 currentPosition = new Vector3(0, 0, 0);
+    [HideInInspector] public Vector3 currentPosition = new Vector3(0, 0, 0);
 
     
     // Start is called before the first frame update
@@ -17,38 +19,34 @@ public class TerrianGenerator : MonoBehaviour
     {
         for (int i = 0; i < maxTerrianCount; i++)
         {
-            SpawnTerrian(true);
+            SpawnTerrian(true, new Vector3(0, 0, 0));
         }
-        maxTerrianCount = currentTerrians.Count;
+        maxTerrianCount = currentTerrians.Count;    
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            SpawnTerrian(false);
-        }
-    }
 
-    private void SpawnTerrian(bool isStart)
+    public void SpawnTerrian(bool isStart,  Vector3 playerPos)
     {
-        int whichTerrain = Random.Range(0, terrianDatas.Count);
-        int terrainInSuccession = Random.Range(1, terrianDatas[whichTerrain].maxInSuccession);
-        for (int i = 0; i < terrainInSuccession; i++)
+        if ((currentPosition.x - playerPos.x < minDistanceFromPlayer) || (isStart))
         {
-            GameObject terrain = Instantiate(terrianDatas[whichTerrain].terrain, currentPosition, Quaternion.identity, terrainHolder);
-            terrain.transform.SetParent(terrainHolder);
-            currentTerrians.Add(terrain);
-            if (!isStart)
+            int whichTerrain = Random.Range(0, terrianDatas.Count);
+            int terrainInSuccession = Random.Range(1, terrianDatas[whichTerrain].maxInSuccession);
+            for (int i = 0; i < terrainInSuccession; i++)
             {
-                if (currentTerrians.Count > maxTerrianCount)
+                GameObject terrain = Instantiate(terrianDatas[whichTerrain].possibleTerrian[Random.Range(0, terrianDatas[whichTerrain].possibleTerrian.Count)], currentPosition, Quaternion.identity, terrainHolder);
+                terrain.transform.SetParent(terrainHolder);
+                currentTerrians.Add(terrain);
+                if (!isStart)
                 {
-                    Destroy(currentTerrians[0]);
-                    currentTerrians.RemoveAt(0);
+                    if (currentTerrians.Count > maxTerrianCount)
+                    {
+                        Destroy(currentTerrians[0]);
+                        currentTerrians.RemoveAt(0);
+                    }
+                    currentPosition.x++;
                 }
-                currentPosition.x++;
             }
         }
     }
 }
+        

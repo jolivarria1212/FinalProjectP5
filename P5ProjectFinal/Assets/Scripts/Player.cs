@@ -1,20 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using UnityEngine.SocialPlatforms.Impl;
 public class Player : MonoBehaviour
 {
+    [SerializeField] private TerrianGenerator terrianGenerator;
+    [SerializeField] private TextMeshProUGUI scoreText;
+
     private Animator animator;
     private bool isHopping;
+    private int score;
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
     }
 
+    private void FixedUpdate()
+    {
+        score++;
+    }
     // Update is called once per frame
     void Update()
     {
+        scoreText.text = "Score: " + score;
         if (Input.GetKeyDown(KeyCode.W) && !isHopping)
         {
             float zDifference = 0;
@@ -39,6 +51,7 @@ public class Player : MonoBehaviour
         animator.SetTrigger("Hop");
         isHopping = true;
         transform.position = (transform.position + difference);
+        terrianGenerator.SpawnTerrian(false, transform.position);
     }
 
     public void FinishHop()
